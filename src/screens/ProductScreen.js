@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import {Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import {Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
-import products from '../products'
+import {listProductDetails} from '../actions/productActions'
+import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { addToCart } from '../actions/cartActions'
 
-const ProductScreen = ({match}) => {
-    const product = products.find(p => p._id === match.params.id)
-    console.log(product)
+const ProductScreen = ({history,match}) => {
+
+    const [qty, setQty] = useState(0)
+
+    const dispatch = useDispatch()
+
+    const productDetails = useSelector(state => state.productDetails);
+
+    const { error, loading, product} = productDetails
+
+    useEffect(()=>{
+        dispatch(listProductDetails(match.params.id))
+    },[dispatch, match])
+
+    const addToCartHandler = () =>{
+        dispatch(addToCart(product._id, qty))
+        history.push(`/cart`)
+    }
+
     return (
         <>
           <Link className="btn btn-light my-3" to="/">
               Go Back
           </Link>
-          <Row>
+          {loading ? (
+              <Loader />
+          ) : error ? <Message variant="alert">{error}</Message> :
+          (
+            <Row>
               <Col md={6}>
                   <Image src={product.image} alt={product.name} fluid />
               </Col>
@@ -43,6 +67,29 @@ const ProductScreen = ({match}) => {
                                   </Col>
                               </Row>
                               </ListGroup.Item>
+
+                              {product.countInStock > 0 && (
+                                  <ListGroup.Item>
+                                      <Row>
+                                          <Col>Qty</Col>
+                                          <Col>
+                                            <Form.Control 
+                                            className='selectForm'
+                                            as="select" 
+                                            value={qty} 
+                                            onChange={(e)=> setQty(e.target.value)}>
+
+                                                {
+                                                [...Array(product.countInStock).keys()].map((x) => 
+                                                (
+                                                    <option key={x + 1} value={x + 1}>{x + 1}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                          </Col>
+                                      </Row>
+                                  </ListGroup.Item>
+                              )}
                               
                               <ListGroup.Item>
                                 <Row>
@@ -54,13 +101,21 @@ const ProductScreen = ({match}) => {
                               </ListGroup.Item>
 
                               <ListGroup.Item>
-                                  <Button className='btn-block' type='button' disabled={product.countInStock === 0}>Add to Cart</Button>
+                                  <Button 
+                                  onClick={addToCartHandler}
+                                  className='btn-block' 
+                                  type='button' 
+                                  disabled={product.countInStock === 0}
+                                  >Add to Cart</Button>
                               </ListGroup.Item>
                           
                       </ListGroup>
                   </Card>
               </Col>
           </Row>
+          )
+          }
+          
         </>
     )
 }
