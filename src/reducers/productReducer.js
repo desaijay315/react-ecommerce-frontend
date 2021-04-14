@@ -45,17 +45,11 @@ export const productListReducer = (state = productListInitialState, action) =>{
     }
 }
 
-const productDetailsInitialState = { 
-    loading: true,
-    error: '',
-    product: { reviews: [] }
- }
 
-
-export const productDetailsReducer = (state = productDetailsInitialState, action) =>{
+export const productDetailsReducer = (state = {product: { reviews: [] }}, action) =>{
     switch(action.type){
         case PRODUCT_DETAILS_REQUEST:
-            return {loading: true, productDetailsInitialState}
+            return {loading: true, product: { reviews: [] }}
         case PRODUCT_DETAILS_SUCCESS:
             return {loading: false, product: action.payload }
         case PRODUCT_DETAILS_FAIL:

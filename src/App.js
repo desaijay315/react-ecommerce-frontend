@@ -5,6 +5,17 @@ import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
 import CartScreen from './screens/CartScreen'
 import LoginScreen from './screens/LoginScreen'
+import ProfileScreen from './screens/ProfileScreen'
+import OrderScreen from './screens/OrderScreen'
+import ShippingScreen from './screens/ShippingScreen'
+import PaymentScreen from './screens/PaymentScreen'
+import PlaceOrderScreen from './screens/PlaceOrderScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import UserListScreen from './screens/UserListScreen'
+import UserEditScreen from './screens/UserEditScreen'
+import ProductListScreen from './screens/ProductListScreen'
+import ProductEditScreen from './screens/ProductEditScreen'
+import OrderListScreen from './screens/OrderListScreen'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -17,15 +28,15 @@ const App = () => {
           {/* <Route path='/order/:id' component={OrderScreen} />
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/payment' component={PaymentScreen} />
-          <Route path='/placeorder' component={PlaceOrderScreen} />
+          <Route path='/placeorder' component={PlaceOrderScreen} /> */}
           <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} />
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/product/:id' component={ProductScreen} />
-          <Route path='/cart/:id?' component={CartScreen} />
-          <Route path='/admin/userlist' component={UserListScreen} />
-          <Route path='/admin/user/:id/edit' component={UserEditScreen} />
-          <Route
+          <Route path='/cart' component={CartScreen} />
+          {/* <Route path='/admin/userlist' component={UserListScreen} /> */}
+          {/* <Route path='/admin/user/:id/edit' component={UserEditScreen} /> */}
+          {/* <Route
             path='/admin/productlist'
             component={ProductListScreen}
             exact
@@ -44,10 +55,11 @@ const App = () => {
             component={HomeScreen}
             exact
           /> */}
-          <Route path='/login' component={LoginScreen} />
-          <Route path='/cart' component={CartScreen} />
-          <Route path='/product/:id' component={ProductScreen} />
-          <Route path='/' component={HomeScreen} exact />
+          <Route
+            path='/'
+            component={HomeScreen}
+            exact
+          />
         </Container>
       </main>
       <Footer />
