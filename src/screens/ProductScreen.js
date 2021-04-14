@@ -18,6 +18,8 @@ const ProductScreen = ({history,match}) => {
 
     const { error, loading, product} = productDetails
 
+    console.log(product)
+
     useEffect(()=>{
         dispatch(listProductDetails(match.params.id))
     },[dispatch, match])
@@ -46,7 +48,12 @@ const ProductScreen = ({history,match}) => {
                           <h2>{product.name}</h2>
                       </ListGroup.Item>
                       <ListGroup.Item>
-                          <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                      {product.rating && (
+                        <Rating
+                        value={product.rating}
+                        text={`${product.numReviews} reviews`}
+                        />
+                        )}
                       </ListGroup.Item>
                       <ListGroup.Item>
                           Price: ${product.price}
